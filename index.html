@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Water background</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css?family=Gochi+Hand');
+
+* { margin: 0; padding: 0; }
+
+html {
+	height: 100%;
+}
+
+body {
+	background: url(img/bg.jpg);
+	background-size: cover;
+	height: 100%;
+}
+
+p {
+	font-family: 'Gochi Hand', cursive;
+	color: #ffffff;
+	text-align: center;
+	position: relative;
+	top: 50px;
+	font-size: 3em;
+	z-index: 3;
+	margin: auto;
+  	display: block;
+  	z-index: 3;
+  	filter: drop-shadow(0 0 5px #4F7676);   
+}
+#mouse{
+	color: #2F4F4F;
+	text-align: center;
+	position: relative;
+	top: 50px;
+	font-size: 2em;
+}
+
+p:nth-of-type(1){
+    animation: blinkers 3s infinite steps(1);
+    color: #efefef;
+}
+  
+@keyframes blinkers{
+    2%, 4%, 6%{
+		color: #000000;
+      	filter: drop-shadow(0 0 5px #000000);
+      	opacity: 1;}
+    0%, 3%, 5%, 7%, 100%{
+      	color: #efefef;
+      	opacity: .3;
+    }}
+
+main {
+	width: 100%;
+	height: 800px;
+	margin: auto;
+	position: relative;
+	top: -100px;
+}
+
+img {
+	width: 100px;
+	height: auto;
+}
+
+div.a, div.b, div.c, div.d, div.e, div.f {
+width: 50px;
+height:50px;
+position:fixed;
+}
+
+</style>
+</head>
+<body>
+	<p id="mouse">moving the mouse</p>
+	<p>you move the water</p>
+	<main></main>
+	<div class='a'><img src="img/fish.png"></div>
+	<div class='b'><img src="img/fish.png"></div>
+	<div class='c'><img src="img/fish.png"></div>
+	<div class='d'><img src="img/fish.png"></div>
+	<div class='e'><img src="img/fish.png"></div>
+	<div class='f'><img src="img/fish.png"></div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<script src="jquery.ripples.js"></script>
+	<script>
+		$(document).ready(function() {
+		$('main').ripples({
+			resolution: 350,
+			dropRadius: 10, //px
+		});
+	});
+
+	$(document).ready(function(){
+    animateDiv('.a');
+    animateDiv('.b');
+	animateDiv('.c');
+	animateDiv('.d');
+	animateDiv('.e');
+	animateDiv('.f');
+	});
+
+	function makeNewPosition(){
+    // Get viewport dimensions (remove the dimension of the div)
+    var h = $(window).height() - 10;
+    var w = $(window).width() - 10;
+    
+    var nh = Math.floor(Math.random() * h);
+    var nw = Math.floor(Math.random() * w);
+    
+    return [nh,nw];    
+    }
+
+	function animateDiv(myclass){
+    var newq = makeNewPosition();
+    $(myclass).animate({ top: newq[0], left: newq[1] }, 7500,   function(){
+      animateDiv(myclass);        
+    });
+	}
+
+	</script>
+</body>
+</html>
